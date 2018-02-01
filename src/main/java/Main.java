@@ -21,45 +21,48 @@ public class Main {
                 fileLines.add(line.toUpperCase());
             }
 
-            // Gere la ponctuation, Uppercase
+//            debugFile(fileLines);
 
-            for (String line2 : fileLines){
+            //TODO : Gere la ponctuation, Uppercase
+
+            for (String line2 : fileLines) {
                 String result[] = line2.split("[. \\n,!?:';]+");
-                for (int x=0; x < result.length; x++){
-                    mapMot.putIfAbsent(result[x], 1);
+
+                for (int x = 0; x < result.length; x++) {
+
+                    if (result[x].length() > 0) {
+
+                        Integer v = mapMot.get(result[x]);
+                        if (v == null) {
+                            v = mapMot.put(result[x], 1);
+                        } else {
+                            mapMot.put(result[x], mapMot.get(result[x]) + 1);
+                        }
+                    }
                 }
 
             }
 
-
             DebugMap(mapMot);
-
-//            debugFile(fileLines);
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
     }
 
-    private static void DebugMap(HashMap<String, Integer> mapMot){
+    private static void DebugMap(HashMap<String, Integer> mapMot) {
 
         for (Map.Entry<String, Integer> entry : mapMot.entrySet()) {
             String key = entry.getKey();
             Integer value = entry.getValue();
-
-            System.out.println( "\"" + key + "\"" + " --> " + value);
-
-
+            System.out.println("\"" + key + "\"" + " --> " + value);
         }
-
     }
 
     private static void debugFile(List<String> fileLines) {
         System.out.println("*----------------------------*");
-        for (String line : fileLines){
+        for (String line : fileLines) {
             System.out.println(line);
         }
         System.out.println("*----------------------------*");
