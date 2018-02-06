@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class Sequentiel {
 
-    public List<String> getFilelines(String filename) {
+    public static List<String> getFilelines(String filename) {
         List<String> fileLines = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -28,7 +28,7 @@ public class Sequentiel {
         return fileLines;
     }
 
-    public HashMap<String, Integer> compteurWord(List<String> fileLines) {
+    public static HashMap<String, Integer> compteurWord(List<String> fileLines) {
         HashMap<String, Integer> mapMot = new HashMap<>();
 
         for (String line2 : fileLines) {
@@ -51,14 +51,14 @@ public class Sequentiel {
     }
 
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
 
         List<String> fileLines;
         HashMap<String, Integer> mapMot;
 
-        fileLines = this.getFilelines(args[0]);
-        mapMot = this.compteurWord(fileLines);
-        
+        fileLines = getFilelines(args[0]);
+        mapMot = compteurWord(fileLines);
+
         DebugMap(mapMot);
     }
 
@@ -71,7 +71,7 @@ public class Sequentiel {
         }
     }
 
-    private static void debugFile(List<String> fileLines) {
+    private void debugFile(List<String> fileLines) {
         System.out.println("*----------------------------*");
         for (String line : fileLines) {
             System.out.println(line);

@@ -34,6 +34,16 @@
                             <includePluginDependencies>false</includePluginDependencies>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>ThreadCpt</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>ThreadCpt</mainClass>
+                            <includePluginDependencies>false</includePluginDependencies>
+                        </configuration>
+                    </execution>
 
                 </executions>
             </plugin>
