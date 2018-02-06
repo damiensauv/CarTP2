@@ -25,12 +25,12 @@
                 <version>1.6.0</version>
                 <executions>
                     <execution>
-                        <id>Main</id>
+                        <id>Sequentiel</id>
                         <goals>
                             <goal>java</goal>
                         </goals>
                         <configuration>
-                            <mainClass>Main</mainClass>
+                            <mainClass>Sequentiel</mainClass>
                             <includePluginDependencies>false</includePluginDependencies>
                         </configuration>
                     </execution>
