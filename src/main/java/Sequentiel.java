@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,47 +9,57 @@ import java.util.Map;
 
 public class Sequentiel {
 
-    public static void main(String[] args) {
-
+    public List<String> getFilelines(String filename) {
         List<String> fileLines = new ArrayList<>();
-        HashMap<String, Integer> mapMot = new HashMap<>();
 
-        // Traiter l'exceion si pas de file en parametre
-        try (BufferedReader br = new BufferedReader(new FileReader(args[0]))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
 
             while ((line = br.readLine()) != null) {
                 fileLines.add(line.toUpperCase());
             }
 
-//            debugFile(fileLines);
-
-            //TODO : Gere la ponctuation, Uppercase
-
-            for (String line2 : fileLines) {
-                String result[] = line2.split("[. \\n,!?:';]+");
-
-                for (int x = 0; x < result.length; x++) {
-
-                    if (result[x].length() > 0) {
-
-                        Integer v = mapMot.get(result[x]);
-                        if (v == null) {
-                            v = mapMot.put(result[x], 1);
-                        } else {
-                            mapMot.put(result[x], mapMot.get(result[x]) + 1);
-                        }
-                    }
-                }
-
-            }
-
-            DebugMap(mapMot);
-
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        return fileLines;
+    }
+
+    public HashMap<String, Integer> compteurWord(List<String> fileLines) {
+        HashMap<String, Integer> mapMot = new HashMap<>();
+
+        for (String line2 : fileLines) {
+            String result[] = line2.split("[. \\n,!?:';]+");
+
+            for (int x = 0; x < result.length; x++) {
+
+                if (result[x].length() > 0) {
+
+                    Integer v = mapMot.get(result[x]);
+                    if (v == null) {
+                        v = mapMot.put(result[x], 1);
+                    } else {
+                        mapMot.put(result[x], mapMot.get(result[x]) + 1);
+                    }
+                }
+            }
+        }
+        return mapMot;
+    }
+
+
+    public void main(String[] args) {
+
+        List<String> fileLines;
+        HashMap<String, Integer> mapMot;
+
+        fileLines = this.getFilelines(args[0]);
+        mapMot = this.compteurWord(fileLines);
+        
+        DebugMap(mapMot);
     }
 
     private static void DebugMap(HashMap<String, Integer> mapMot) {
