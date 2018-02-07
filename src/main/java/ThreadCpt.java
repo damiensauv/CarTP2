@@ -1,7 +1,7 @@
+import com.google.common.collect.Lists;
+
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class ThreadCpt extends Thread {
 
@@ -15,13 +15,11 @@ public class ThreadCpt extends Thread {
         System.out.println("Thread --> " + index);
     }
 
-    public static List<List<String>> lineThread(List<String> filelines, Integer nbThread) {
+    public static List<List<String>> prepareLineThread(List<String> filelines, Integer nbThread) {
 
-        int size = (filelines.size() / nbThread) + 1;
+        int size = filelines.size() / nbThread;
 
-        List<List<String>> allLines = IntStream.range(0, nbThread)
-                .mapToObj(i -> filelines.subList(i * size,  filelines.size()))
-                .collect(Collectors.toList());
+        List<List<String>> allLines = Lists.partition(filelines, size);
 
         return allLines;
     }
@@ -36,16 +34,15 @@ public class ThreadCpt extends Thread {
         // TODO : prendre en params le nb de thread
 
         fileLines = Sequentiel.getFilelines(args[0]);
-        alllines = lineThread(fileLines, nbThread);
+        alllines = prepareLineThread(fileLines, nbThread);
 
 
-        for (List<String> line : alllines){
+        for (List<String> line : alllines) {
 
             System.out.println("----------");
             System.out.println(line);
             System.out.println("-----------");
         }
-
 
 
 //        mapMot = Sequentiel.compteurWord(fileLines);
