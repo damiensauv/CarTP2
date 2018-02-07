@@ -62,7 +62,7 @@ public class Sequentiel {
         DebugMap(mapMot);
     }
 
-    private static void DebugMap(HashMap<String, Integer> mapMot) {
+    public static void DebugMap(HashMap<String, Integer> mapMot) {
 
         for (Map.Entry<String, Integer> entry : mapMot.entrySet()) {
             String key = entry.getKey();

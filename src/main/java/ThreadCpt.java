@@ -29,6 +29,9 @@ public class ThreadCpt extends Thread {
         List<String> fileLines;
         List<List<String>> alllines;
         HashMap<String, Integer> mapMot;
+        HashMap<String, Integer> mapMot2;
+
+        HashMap<String, Integer> finalMap = new HashMap<>();
         int nbThread = 2;
 
         // TODO : prendre en params le nb de thread
@@ -37,17 +40,22 @@ public class ThreadCpt extends Thread {
         alllines = prepareLineThread(fileLines, nbThread);
 
 
-        for (List<String> line : alllines) {
-
-            System.out.println("----------");
-            System.out.println(line);
-            System.out.println("-----------");
+        for (List<String> l : alllines){
+            System.out.println(l);
         }
 
+        /*
+        mapMot = Sequentiel.compteurWord(alllines.get(0));
+  //      Sequentiel.DebugMap(mapMot);
 
-//        mapMot = Sequentiel.compteurWord(fileLines);
+        mapMot2 = Sequentiel.compteurWord(alllines.get(1));
+//        Sequentiel.DebugMap(mapMot2);
 
+        finalMap.putAll(mapMot);
+        finalMap.putAll(mapMot2);
 
+        Sequentiel.DebugMap(finalMap);
+*/
     }
 
 
