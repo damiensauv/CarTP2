@@ -45,9 +45,31 @@
                         </configuration>
                     </execution>
 
+                    <execution>
+                        <id>Server</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>Server</mainClass>
+                            <includePluginDependencies>false</includePluginDependencies>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>Client</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>Client</mainClass>
+                            <includePluginDependencies>false</includePluginDependencies>
+                        </configuration>
+                    </execution>
+
                 </executions>
             </plugin>
-            
+
         </plugins>
     </build>
 

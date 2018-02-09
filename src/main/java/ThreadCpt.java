@@ -13,12 +13,17 @@ public class ThreadCpt extends Thread {
         this.line = line;
     }
 
+    public ThreadCpt() {
+
+    }
+
     public void run() {
         map = utils.compteurWord(line);
     }
 
-    public static void main(String[] args) {
+    public void execMultiThread(String[] args){
         Utils utils = new Utils();
+
         int nbThread = Integer.parseInt(args[0]);
 
         ThreadCpt[] threadCpt = new ThreadCpt[nbThread];
@@ -57,6 +62,11 @@ public class ThreadCpt extends Thread {
         utils.setMap(utils.getFinalMap());
         utils.displayMax(utils.getMax());
 
+    }
+
+    public static void main(String[] args) {
+        ThreadCpt exec = new ThreadCpt();
+        exec.execMultiThread(args);
     }
 
 
