@@ -22,8 +22,10 @@ public class Utils {
         return max;
     }
 
-    public void displayMax(Map.Entry<String, Integer> entry) {
-        System.out.println("Le mot max est " + entry.getKey() + " qui apparait " + entry.getValue() + " fois.");
+    public String displayMax(Map.Entry<String, Integer> entry) {
+        String d = "Le mot max est " + entry.getKey() + " qui apparait " + entry.getValue() + " fois.";
+        System.out.println(d);
+        return d;
     }
 
     public List<String> getFilelines(String filename) {

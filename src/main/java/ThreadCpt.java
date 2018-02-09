@@ -6,12 +6,15 @@ public class ThreadCpt extends Thread {
     public int index;
     public HashMap<String, Integer> map = new HashMap<>();
     public List<String> line;
+    public List<String> fileLines;
     Utils utils = new Utils();
+    public int nbThread;
 
     public ThreadCpt(int index, List<String> line) {
         this.index = index;
         this.line = line;
     }
+
 
     public ThreadCpt() {
 
@@ -21,18 +24,18 @@ public class ThreadCpt extends Thread {
         map = utils.compteurWord(line);
     }
 
-    public void execMultiThread(String[] args){
-        Utils utils = new Utils();
+    public String execMultiThread() {
 
-        int nbThread = Integer.parseInt(args[0]);
+        Utils utils = new Utils();
 
         ThreadCpt[] threadCpt = new ThreadCpt[nbThread];
 
-        List<String> fileLines = utils.getFilelines(args[1]);
         List<List<String>> alllines = utils.prepareLineThread(fileLines, nbThread);
 
+//        System.out.println(alllines);
+
         int i = 0;
-        while (!alllines.get(i).isEmpty() && i < nbThread) {
+        while (i < nbThread) {
             threadCpt[i] = new ThreadCpt(i, alllines.get(i));
             i++;
         }
@@ -60,13 +63,18 @@ public class ThreadCpt extends Thread {
 
         System.out.println("Compteur : multi-threaded");
         utils.setMap(utils.getFinalMap());
-        utils.displayMax(utils.getMax());
+        String display = utils.displayMax(utils.getMax());
+        return display;
 
+//return "";
     }
 
     public static void main(String[] args) {
         ThreadCpt exec = new ThreadCpt();
-        exec.execMultiThread(args);
+        Utils u = new Utils();
+        exec.nbThread = Integer.parseInt(args[0]);
+        exec.fileLines = u.getFilelines(args[1]);
+        exec.execMultiThread();
     }
 
 
