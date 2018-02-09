@@ -1,61 +1,61 @@
-import com.google.common.collect.Lists;
-
 import java.util.HashMap;
 import java.util.List;
 
 public class ThreadCpt extends Thread {
 
-    int index;
+    public int index;
+    public HashMap<String, Integer> map = new HashMap<>();
+    public List<String> line;
+    Utils utils = new Utils();
 
-    public ThreadCpt(int i) {
-        index = i;
+    public ThreadCpt(int index, List<String> line) {
+        this.index = index;
+        this.line = line;
     }
 
     public void run() {
-        System.out.println("Thread --> " + index);
-    }
-
-    public static List<List<String>> prepareLineThread(List<String> filelines, Integer nbThread) {
-
-        int size = filelines.size() / nbThread;
-
-        List<List<String>> allLines = Lists.partition(filelines, size);
-
-        return allLines;
+        map = utils.compteurWord(line);
     }
 
     public static void main(String[] args) {
+        Utils utils = new Utils();
+        int nbThread = 3;
 
-        List<String> fileLines;
-        List<List<String>> alllines;
-        HashMap<String, Integer> mapMot;
-        HashMap<String, Integer> mapMot2;
+        ThreadCpt[] threadCpt = new ThreadCpt[nbThread];
 
-        HashMap<String, Integer> finalMap = new HashMap<>();
-        int nbThread = 2;
+        List<String> fileLines = utils.getFilelines(args[0]);
+        List<List<String>> alllines = utils.prepareLineThread(fileLines, nbThread);
 
-        // TODO : prendre en params le nb de thread
-
-        fileLines = Sequentiel.getFilelines(args[0]);
-        alllines = prepareLineThread(fileLines, nbThread);
-
-
-        for (List<String> l : alllines){
-            System.out.println(l);
+        int i = 0;
+        while (i < nbThread) {
+            threadCpt[i] = new ThreadCpt(i, alllines.get(i));
+            i++;
+        }
+        i = 0;
+        while (i < nbThread) {
+            threadCpt[i].start();
+            i++;
+        }
+        i = 0;
+        while (i < nbThread) {
+            try {
+                threadCpt[i].join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            i++;
         }
 
-        /*
-        mapMot = Sequentiel.compteurWord(alllines.get(0));
-  //      Sequentiel.DebugMap(mapMot);
+        i = 0;
+        while (i < nbThread) {
+            utils.mergeMap(threadCpt[i].map);
+            i++;
+        }
 
-        mapMot2 = Sequentiel.compteurWord(alllines.get(1));
-//        Sequentiel.DebugMap(mapMot2);
+        System.out.println("Compteur : multi-threaded");
+        utils.setMap(utils.getFinalMap());
+        utils.displayMax(utils.getMax());
 
-        finalMap.putAll(mapMot);
-        finalMap.putAll(mapMot2);
-
-        Sequentiel.DebugMap(finalMap);
-*/
     }
 
 
