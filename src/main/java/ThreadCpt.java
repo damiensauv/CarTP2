@@ -19,25 +19,26 @@ public class ThreadCpt extends Thread {
 
     public static void main(String[] args) {
         Utils utils = new Utils();
-        int nbThread = 3;
+        int nbThread = Integer.parseInt(args[0]);
 
         ThreadCpt[] threadCpt = new ThreadCpt[nbThread];
 
-        List<String> fileLines = utils.getFilelines(args[0]);
+        List<String> fileLines = utils.getFilelines(args[1]);
         List<List<String>> alllines = utils.prepareLineThread(fileLines, nbThread);
 
         int i = 0;
-        while (i < nbThread) {
+        while (!alllines.get(i).isEmpty() && i < nbThread) {
             threadCpt[i] = new ThreadCpt(i, alllines.get(i));
             i++;
         }
+
         i = 0;
-        while (i < nbThread) {
+        while (!alllines.get(i).isEmpty() && i < nbThread) {
             threadCpt[i].start();
             i++;
         }
         i = 0;
-        while (i < nbThread) {
+        while (!alllines.get(i).isEmpty() && i < nbThread) {
             try {
                 threadCpt[i].join();
             } catch (InterruptedException e) {
@@ -47,7 +48,7 @@ public class ThreadCpt extends Thread {
         }
 
         i = 0;
-        while (i < nbThread) {
+        while (!alllines.get(i).isEmpty() && i < nbThread) {
             utils.mergeMap(threadCpt[i].map);
             i++;
         }

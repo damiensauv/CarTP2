@@ -47,18 +47,8 @@
 
                 </executions>
             </plugin>
-
-
+            
         </plugins>
     </build>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>24.0-jre</version>
-        </dependency>
-    </dependencies>
-
 
 </project>

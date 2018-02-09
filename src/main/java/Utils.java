@@ -1,5 +1,3 @@
-import com.google.common.collect.Lists;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -47,9 +45,28 @@ public class Utils {
 
     public List<List<String>> prepareLineThread(List<String> filelines, Integer nbThread) {
 
-        int size = filelines.size() / nbThread + 1;
+        int size = 0;
+        if (filelines.size() > nbThread)
+            size = filelines.size() / nbThread + 1;
+        else
+            size = 2;
 
-        List<List<String>> allLines = Lists.partition(filelines, size);
+        List<List<String>> allLines = new ArrayList<>();
+        List<String> tmp = new ArrayList<>();
+
+        int i = 0;
+        int j = 0;
+        while (i < filelines.size()) {
+            tmp.add(filelines.get(i));
+            if (j == size - 1) {
+                allLines.add(tmp);
+                tmp = new ArrayList<>();
+                j = 0;
+            }
+            j++;
+            i++;
+        }
+        allLines.add(tmp);
 
         return allLines;
     }
