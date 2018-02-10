@@ -16,7 +16,6 @@ public class ThreadCpt extends Thread {
         this.line = line;
     }
 
-
     public ThreadCpt() {
 
     }
@@ -74,10 +73,13 @@ public class ThreadCpt extends Thread {
     public static void main(String[] args) {
         ThreadCpt exec = new ThreadCpt();
         Utils u = new Utils();
-        exec.nbThread = Integer.parseInt(args[0]);
-        exec.fileLines = u.getFilelines(args[1]);
-        exec.execMultiThread();
+        try {
+            exec.nbThread = Integer.parseInt(args[0]);
+            exec.fileLines = u.getFilelines(args[1]);
+            exec.execMultiThread();
+        } catch (Exception e) {
+            System.out.println("Bad Parameters");
+            System.exit(-1);
+        }
     }
-
-
 }

@@ -12,7 +12,13 @@ public class Client {
 
     private void executer(String[] args) {
         Utils utils = new Utils();
-        List<String> fileLines = utils.getFilelines(args[0]);
+        List<String> fileLines = null;
+        try {
+            fileLines = utils.getFilelines(args[0]);
+        } catch (Exception e) {
+            System.out.println("Bad parameter");
+            System.exit(-1);
+        }
 
         try {
             as = new Socket(InetAddress.getLocalHost(), 4000);
@@ -23,12 +29,12 @@ public class Client {
                 BufferedReader in = new BufferedReader(new InputStreamReader(as.getInputStream()));
                 BufferedReader line = new BufferedReader(new InputStreamReader(System.in));
 
+                // On envoie au serveur ligne par ligne
                 for (String s : fileLines) {
                     out.writeBytes(s);
                     out.writeBytes("\n");
                 }
                 out.writeBytes("::END::\n");
-
                 System.out.println("[Client] : Message envoyé");
 
                 String response = in.readLine();

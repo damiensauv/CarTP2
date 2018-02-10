@@ -24,15 +24,21 @@ public class Server {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(as.getInputStream()));
                 DataOutputStream out = new DataOutputStream(as.getOutputStream());
-
-                String msg = null;
+                String msg;
                 List<String> allLines = new ArrayList<>();
 
-                while (!(msg = in.readLine()).equals("::END::") ){
+                // On recupere ligne par ligne
+                while (!(msg = in.readLine()).equals("::END::")) {
                     allLines.add(msg);
-                 }
+                }
 
-                exec.nbThread = 5;
+                try {
+                    exec.nbThread = Integer.parseInt(args[0]);
+                } catch (Exception e) {
+                    System.out.println("Bad parameter");
+                    System.exit(-1);
+                }
+                // On execute le Thread compteur
                 exec.fileLines = new ArrayList<>(allLines);
                 String ret = exec.execMultiThread();
 
@@ -43,13 +49,10 @@ public class Server {
         } catch (IOException ex) {
             System.exit(-1);
         }
-
     }
 
     public static void main(String[] args) {
         Server s = new Server();
         s.executer(args);
-
     }
-
 }

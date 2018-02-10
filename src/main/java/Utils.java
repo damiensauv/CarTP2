@@ -39,12 +39,14 @@ public class Utils {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Fichier manquant");
+            System.exit(-1);
         }
 
         return fileLines;
     }
 
+    // Divise les List<String> --> List<List<String>> afin de les partager entre les Thread
     public List<List<String>> prepareLineThread(List<String> filelines, Integer nbThread) {
 
         int size = 0;
@@ -69,7 +71,6 @@ public class Utils {
             i++;
         }
         allLines.add(tmp);
-
         return allLines;
     }
 
@@ -89,12 +90,10 @@ public class Utils {
             String result[] = line2.split("[. \\n,!?:';]+");
 
             for (int x = 0; x < result.length; x++) {
-
                 if (result[x].length() > 0) {
-
                     Integer v = mapcpt.get(result[x]);
                     if (v == null) {
-                        v = mapcpt.put(result[x], 1);
+                        mapcpt.put(result[x], 1);
                     } else {
                         mapcpt.put(result[x], mapcpt.get(result[x]) + 1);
                     }
@@ -103,7 +102,6 @@ public class Utils {
         }
         return mapcpt;
     }
-
 
     public HashMap<String, Integer> getMap() {
         return map;
