@@ -60,7 +60,7 @@ public class Utils {
         int j = 0;
         while (i < filelines.size()) {
             tmp.add(filelines.get(i));
-            if (j == size - 1) {
+            if (j == size) {
                 allLines.add(tmp);
                 tmp = new ArrayList<>();
                 j = 0;

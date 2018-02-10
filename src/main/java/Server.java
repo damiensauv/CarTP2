@@ -32,11 +32,11 @@ public class Server {
                     allLines.add(msg);
                  }
 
-                exec.nbThread = 1;
+                exec.nbThread = 5;
                 exec.fileLines = new ArrayList<>(allLines);
                 String ret = exec.execMultiThread();
 
-                out.writeBytes(ret);
+                out.writeBytes(ret + "\n");
                 System.out.println("[Server] Réponse envoyée : " + as);
 
             }

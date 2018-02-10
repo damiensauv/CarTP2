@@ -27,7 +27,6 @@ public class Client {
                     out.writeBytes(s);
                     out.writeBytes("\n");
                 }
-
                 out.writeBytes("::END::\n");
 
                 System.out.println("[Client] : Message envoyé");
@@ -45,7 +44,6 @@ public class Client {
         } catch (IOException ex) {
             System.exit(-1);
         }
-
 
     }
 

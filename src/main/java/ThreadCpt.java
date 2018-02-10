@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class ThreadCpt extends Thread {
@@ -27,46 +28,47 @@ public class ThreadCpt extends Thread {
     public String execMultiThread() {
 
         Utils utils = new Utils();
-
         ThreadCpt[] threadCpt = new ThreadCpt[nbThread];
-
         List<List<String>> alllines = utils.prepareLineThread(fileLines, nbThread);
-
-//        System.out.println(alllines);
+        Iterator<List<String>> it = alllines.iterator();
 
         int i = 0;
-        while (i < nbThread) {
-            threadCpt[i] = new ThreadCpt(i, alllines.get(i));
+        while (it.hasNext() && i < nbThread) {
+            threadCpt[i] = new ThreadCpt(i, it.next());
             i++;
         }
 
+        it = alllines.iterator();
         i = 0;
-        while (!alllines.get(i).isEmpty() && i < nbThread) {
+        while (it.hasNext() && i < nbThread) {
             threadCpt[i].start();
             i++;
+            it.next();
         }
+
+        it = alllines.iterator();
         i = 0;
-        while (!alllines.get(i).isEmpty() && i < nbThread) {
+        while (it.hasNext() && i < nbThread) {
             try {
                 threadCpt[i].join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            it.next();
             i++;
         }
-
+        it = alllines.iterator();
         i = 0;
-        while (!alllines.get(i).isEmpty() && i < nbThread) {
+        while (it.hasNext() && i < nbThread) {
             utils.mergeMap(threadCpt[i].map);
             i++;
+            it.next();
         }
 
         System.out.println("Compteur : multi-threaded");
         utils.setMap(utils.getFinalMap());
         String display = utils.displayMax(utils.getMax());
         return display;
-
-//return "";
     }
 
     public static void main(String[] args) {
